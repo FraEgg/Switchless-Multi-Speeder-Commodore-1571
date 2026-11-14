@@ -4,9 +4,15 @@
 Schema wie die C128DCR-Vorlage C1571_C128DCR_29F040.BIN (8 Baenke zu 64 KB,
 n@RNROM waehlt Bank n, untere Haelfte $FF, DOS ab $x8000):
 
-  Bank 1, 2, 5-8  Commodore DOS V3.0 1571 (310654-05)   $x8000-$xFFFF
-  Bank 3          DolphinDOS 3 1571 (Original)           $28000-$2FFFF
-  Bank 4          C1571DolphinDos26 (64 KB)              $30000-$3FFFF
+  Bank 1, 2, 7, 8  Commodore DOS V3.0 1571 (310654-05)   $x8000-$xFFFF   1@RNROM, 2@RNROM, 7@RNROM, 8@RNROM
+  Bank 3           DolphinDOS 3 1571 (Original)           $28000-$2FFFF   3@RNROM
+  Bank 4           C1571DolphinDos26 (64 KB)              $30000-$3FFFF   4@RNROM
+  Bank 5, 6        C1571SpeedDOS26 (32 KB, SpeedDos26     $48000-$4FFFF   5@RNROM
+                   fuer die externe 1571, Basis 310654-05) $58000-$5FFFF   6@RNROM
+
+Bank 5 und Bank 6 enthalten dasselbe Laufwerks-ROM Builds/C1571SpeedDOS26.bin (wie beim C128DCR, wo
+5@RNROM und 6@RNROM zusaetzlich den US- bzw. deutschen Kernal waehlen). Das Ergebnis ist byte-identisch
+mit Builds/C1571_29F040.BIN.
 
 Aufruf: tools/make_eprom_1571.py [ausgabe]   (Standard: rom/C1571_29F040.BIN)
 Quellen werden ueber das Projektverzeichnis mit Builds/ gefunden.
@@ -33,8 +39,10 @@ SRC = {
     'dd3': (os.path.join(R, 'Referenzen', '1571-DolphinDos3.ROM.BIN'), 0x8000,
             'e39a154877cc3a1a893688bc8cabccf2'),
     'dd26': (os.path.join(R, 'Builds', 'C1571_DOLPHINDOS26.bin'), 0x10000, None),
+    'sd26': (os.path.join(R, 'Builds', 'C1571SpeedDOS26.bin'), 0x8000, None),
 }
-BANKS = ['cbm', 'cbm', 'dd3', 'dd26', 'cbm', 'cbm', 'cbm', 'cbm']
+# Bank 1..8; 32-KB-ROMs liegen in der oberen Haelfte ($x8000), die untere Haelfte ist $FF
+BANKS = ['cbm', 'cbm', 'dd3', 'dd26', 'sd26', 'sd26', 'cbm', 'cbm']
 
 
 def load(k):

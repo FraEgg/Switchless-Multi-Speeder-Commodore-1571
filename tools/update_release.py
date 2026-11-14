@@ -4,6 +4,7 @@
 Run from anywhere:  python3 tools/update_release.py [--manuals DIR] [--manuals-en DIR] [--check]
 
 Copies the DolphinDos26 ROMs for the external 1571 and the computer (C64, C128),
+the SpeedDos26 kernals for the computer (C64, C64 II, C128 German and US keyboard),
 the MS-Tools disk and the manuals (German and English, as PDF)
 into this repository, rebuilds the EPROM template rom/C1571_29F040.BIN with
 tools/make_eprom_1571.py, writes CHECKSUMS.md5 and CHECKSUMS.sha256 over everything
@@ -11,11 +12,17 @@ published, and reports what is out of date:
 
 - an English manual is missing or older than the German one;
 - a manual does not state the MD5 of a ROM published here;
-- a file in rom/ is not one of the allowed DolphinDos26 ROMs.
+- a file in rom/ is not one of the allowed DolphinDos26 or SpeedDos26 ROMs.
 
-Only the DolphinDos26 ROMs and the EPROM template with Commodore DOS 310654-05,
-DolphinDOS 3 and DolphinDos26 may be published. ROM images with original JiffyDOS code
-(C64, C128, 1541, 1571) or other complete EPROM images must never be added to this repository.
+Only the DolphinDos26 ROMs, the SpeedDos26 kernals and the EPROM template with Commodore DOS
+310654-05, DolphinDOS 3, DolphinDos26 and SpeedDos26 (banks 5 and 6) may be published.
+rom/ must always hold the template with SpeedDos26 in banks 5 and 6, the C128 kernals
+C128SpeedDos26-DE.bin and C128SpeedDos26-EN.bin and the C64 kernals C64SpeedDos26.bin and
+C64IISpeedDos26.bin, next to the DolphinDos26 files. The DolphinDos26 and SpeedDos26 kernals
+contain JiffyDOS transfer routines (see README.md and LICENSE.md); that is allowed.
+ROM images with original JiffyDOS drive firmware or original JiffyDOS kernals (C64, C128, 1541,
+1571) and other complete EPROM images (for example the kernal images of the C128DCR) must never
+be added to this repository.
 
 The hardware files (hardware/) are maintained here directly and are only checksummed.
 The script exits with status 1 if anything is out of date. --check changes nothing.
@@ -42,9 +49,13 @@ def find_root():
 
 ROOT = find_root()
 ROMS = ['C1571_DOLPHINDOS26.bin', 'C128DolphinDos26-US.BIN', 'C128DolphinDos26-DE.BIN',
-        'C64IIDolphinDos26.bin', 'C64DolphinDos26.bin']
+        'C64IIDolphinDos26.bin', 'C64DolphinDos26.bin',
+        # SpeedDos26 kernals for the computer; the drive ROM C1571SpeedDOS26.bin is in banks 5 and 6
+        # of the template
+        'C128SpeedDos26-DE.bin', 'C128SpeedDos26-EN.bin', 'C64IISpeedDos26.bin', 'C64SpeedDos26.bin']
 # EPROM template, built by tools/make_eprom_1571.py: same layout as the C128DCR template,
-# Commodore DOS 310654-05 in banks 1-2 and 5-8, DolphinDOS 3 in bank 3, DolphinDos26 in bank 4
+# Commodore DOS 310654-05 in banks 1, 2, 7 and 8, DolphinDOS 3 in bank 3, DolphinDos26 in bank 4,
+# SpeedDos26 for the external 1571 (Builds/C1571SpeedDOS26.bin) in banks 5 and 6
 TEMPLATES = ['C1571_29F040.BIN']
 # German manual -> English manual (dd25/doc/handbuch: make m7x, make en)
 MANUALS = {'MultiSpeeder1571_Handbuch.pdf': 'MultiSpeeder1571_Manual.pdf'}
@@ -83,7 +94,8 @@ def main():
 
     for r in ROMS:
         copy(builds / r, REPO / 'rom' / r, a.check, bad)
-    # the template is rebuilt from Builds/C1571_DOLPHINDOS26.bin, DolphinDOS 3 and CBM DOS 310654-05
+    # the template is rebuilt from Builds/C1571_DOLPHINDOS26.bin, Builds/C1571SpeedDOS26.bin,
+    # DolphinDOS 3 and CBM DOS 310654-05
     with tempfile.TemporaryDirectory() as td:
         t = pathlib.Path(td) / TEMPLATES[0]
         r = subprocess.run([sys.executable, str(REPO / 'tools' / 'make_eprom_1571.py'), str(t)],
@@ -92,9 +104,12 @@ def main():
             bad.append('make_eprom_1571.py failed: %s' % (r.stderr or r.stdout).strip())
         else:
             copy(t, REPO / 'rom' / TEMPLATES[0], a.check, bad)
+            # the template published here must be the image in Builds (SpeedDos26 in banks 5 and 6)
+            if (builds / TEMPLATES[0]).exists() and sha(t) != sha(builds / TEMPLATES[0]):
+                bad.append('%s: rebuilt template differs from Builds/%s' % (TEMPLATES[0], TEMPLATES[0]))
     for p in (REPO / 'rom').glob('*'):
         if p.name not in ROMS + TEMPLATES:
-            bad.append('not allowed in rom/: %s (only the DolphinDos26 ROMs may be published)' % p.name)
+            bad.append('not allowed in rom/: %s (only the DolphinDos26 and SpeedDos26 ROMs may be published)' % p.name)
     for t in TEMPLATES:
         p = REPO / 'rom' / t
         if p.exists() and b'JIFFY' in p.read_bytes().upper():
