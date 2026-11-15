@@ -12,8 +12,8 @@ b5548e911fd0c9e1aead3ff3c4e64282  hardware/gal/ATF16V8_PAL_Adressendecoder_V3_0P
 a5312e561afbc428515579ee6963aa65  hardware/gerber/v3.3_1571_CPU_THT_DD3_Multi-Speeder_512KB_DIP40-PIA.kicad_pcb.zip
 6b13338cf4d4bec216ef914ea9aff89f  hardware/schematics/v3.3_1571_CPU_THT_DD3_Multi-Speeder_512KB_DIP40-PIA_PCB.pdf
 c0448742b19567d4feffbb42764f1de3  hardware/schematics/v3.3_1571_CPU_THT_DD3_Multi-Speeder_512KB_DIP40-PIA_schematics.pdf
-62bb5aa56d8bfea2ac8638c2809e6b12  manuals/de/MultiSpeeder1571_Handbuch.pdf
-6bc54c9fb1054382dba840f13c3cbb8d  manuals/en/MultiSpeeder1571_Manual.pdf
+973c6a789354aee10916572b17837d7c  manuals/de/MultiSpeeder1571_Handbuch.pdf
+785881f43237e3d0d4cf236169e2f95e  manuals/en/MultiSpeeder1571_Manual.pdf
 59744e65e023c4637e14d3de09a112fd  ms-tools/ms-tools.d64
 20aea19be1369bceddc0d6dccb7d373f  rom/C128DolphinDos26-DE.BIN
 859493314e98777a595d0f2a039e6800  rom/C128DolphinDos26-US.BIN
@@ -21,7 +21,7 @@ ccc3625ab6770d7140e82a440689b34b  rom/C128SpeedDos26-DE.bin
 5a6383d56170885c43da2da7ce9ab006  rom/C128SpeedDos26-EN.bin
 5c58239c28425845a8160742f567ad0b  rom/C1571_29F040.BIN
 947041a25c15acaa979fa87181f07ab1  rom/C1571_DOLPHINDOS26.bin
-a9bf3125240ec59846492a4dd65eaea6  rom/C64DolphinDos26.bin
-54fa1120daf6baafe39c31495a22f448  rom/C64IIDolphinDos26.bin
-ddbcef24ff23c427cb586a6d5388cab8  rom/C64IISpeedDos26.bin
-41363fe7558b91996d025062952cccfe  rom/C64SpeedDos26.bin
+376f66e16cf1978d6c82f7dc66e1476c  rom/C64DolphinDos26.bin
+3af69fc41f924db6a4ed568b8841d166  rom/C64IIDolphinDos26.bin
+dd1000823c4c90885fc2e14705aaf04c  rom/C64IISpeedDos26.bin
+95f828e21e9305485ae6e0883b58fce1  rom/C64SpeedDos26.bin
