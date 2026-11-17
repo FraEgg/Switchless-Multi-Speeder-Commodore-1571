@@ -59,7 +59,10 @@ ROMS = ['C1571_DOLPHINDOS26.bin', 'C128DolphinDos26-US.BIN', 'C128DolphinDos26-D
 TEMPLATES = ['C1571_29F040.BIN']
 # German manual -> English manual (dd25/doc/handbuch: make m7x, make en)
 MANUALS = {'MultiSpeeder1571_Handbuch.pdf': 'MultiSpeeder1571_Manual.pdf'}
-CHECKSUMMED = ('rom', 'ms-tools', 'manuals', 'hardware')
+CHECKSUMMED = ('rom', 'ms-tools', 'manuals', 'hardware', 'rom-builder')
+# Browser tool MS-ROM-Builder (one tool for 1541, external 1571 and C128DCR) from its development
+# folder MS-ROM-Builder-C128DCR; it contains no ROM data
+ROM_BUILDER = ('MS-ROM-Builder-C128DCR/index.html', 'rom-builder/MS-ROM-Builder.html')
 
 
 def sha(p):
@@ -126,6 +129,10 @@ def main():
             bad.append('English manual older than German one: %s' % en)
 
     copy(root / 'MS-Tools' / 'ms-tools.d64', REPO / 'ms-tools' / 'ms-tools.d64', a.check, bad)
+    copy(root / ROM_BUILDER[0], REPO / ROM_BUILDER[1], a.check, bad)
+    rb = REPO / ROM_BUILDER[1]
+    if rb.exists() and rb.stat().st_size > 200000:
+        bad.append('%s is larger than expected - it must not contain ROM data' % ROM_BUILDER[1])
 
     # every manual must state the MD5 of exactly the files published here
     for pdf in (REPO / 'manuals').rglob('*.pdf'):

@@ -8,6 +8,7 @@
 
 | | English | Deutsch |
 |---|---|---|
+| MS-ROM-Builder (browser tool for your own EPROM images) | [HTML](rom-builder/MS-ROM-Builder.html) | [HTML](rom-builder/MS-ROM-Builder.html) |
 | 1571 Multi-Speeder V3 manual (hardware, parallel cable, C64/C128 kernals, build instructions, BOM) | [PDF](manuals/en/MultiSpeeder1571_Manual.pdf) | [PDF](manuals/de/MultiSpeeder1571_Handbuch.pdf) |
 | DolphinDos26 manual (operation, commands, MS-Tools) | [DolphinDOS26](https://github.com/FraEgg/DolphinDOS) | [DolphinDOS26](https://github.com/FraEgg/DolphinDOS) |
 | Interactive bill of materials (open in a browser) | [HTML](hardware/bom/v3.3_1571_CPU_THT_DD3_Multi-Speeder_512KB_DIP40-PIA_ibom.html) | [HTML](hardware/bom/v3.3_1571_CPU_THT_DD3_Multi-Speeder_512KB_DIP40-PIA_ibom.html) |
@@ -69,7 +70,10 @@ The DolphinDos26 ROMs are the same as in the [DolphinDOS26](https://github.com/F
 | `3@RNROM` | `$20000` | DolphinDOS 3 1571 (original) |
 | `4@RNROM` | `$30000` | **C1571DolphinDos26** |
 | `5@RNROM`, `6@RNROM` | `$40000`, `$50000` | **C1571SpeedDOS26** (SpeedDos26 for the external 1571) |
-| `7@RNROM`, `8@RNROM` | `$60000`, `$70000` | Commodore DOS V3.0 1571 (310654-05) |
+| `7@RNROM` | `$60000` | Commodore DOS V3.0 1571 (310654-05); recommended place for your own JiffyDOS ROM |
+| `8@RNROM` | `$70000` | Commodore DOS V3.0 1571 (310654-05), free for further DOS versions |
+
+**JiffyDOS:** JiffyDOS is not part of the project and is not contained in any template. If you own a licensed JiffyDOS ROM for the 1571, the best place for it is **bank 7** (`7@RNROM`): the 32 KB file goes into the upper half of the bank, from offset `$68000` of the image. Bank 8 is suitable as well. The easiest way is the MS-ROM-Builder (see below).
 
 ## SpeedDos26
 
@@ -136,6 +140,17 @@ ATmega328P fuse bytes: low `0xFF`, high `0xDE`, extended `0xFD`, lock bits `0xCF
 
 **Ordering the boards:** The boards can be made by any common PCB manufacturer from the Gerber files.
 
+## MS-ROM-Builder (build your own EPROM images)
+
+[`rom-builder/MS-ROM-Builder.html`](rom-builder/MS-ROM-Builder.html) is a browser tool for assembling the 512 KB EPROM image of the 1571 Multi-Speeder in the external 1571 yourself. Download the file and open it in a current browser – no installation, works offline on Windows, macOS and Linux, and the ROM files never leave your computer. The tool contains no ROMs. It is one tool for all three Multi-Speeder boards (1541, external 1571, C128DCR); choose **1571** at the top right.
+
+- All eight banks with the slots of the 1571: whole bank (64 KB), DOS ROM `$8000`–`$FFFF` (32 KB) and extra ROM (4 KB). The template `C1571_29F040.BIN` is preset, with DolphinDos26 in bank 4 and SpeedDos26 in banks 5 and 6.
+- Drop your ROM files in: they are assigned by their checksum, or placed directly onto a slot. Finished images can be opened, split into their parts and single banks replaced.
+- Checks for missing, different or unknown ROMs, JiffyDOS content and reset vectors, and names the kernal that belongs to a bank. Shows solder jumper J2 for 29F040, SST39SF040 or 27C040.
+- Download the finished 512 KB file with its MD5; save and load the layout as a small project file (no ROM data). German and English.
+
+<p align="center"><img src="assets/ms-rom-builder.png" alt="MS-ROM-Builder" width="640"></p>
+
 ## Installation in short
 
 1. Program the **29F040** for the Multi-Speeder board with the template `C1571_29F040.BIN` (Commodore DOS, DolphinDOS 3 in bank 3, DolphinDos26 in bank 4, SpeedDos26 in banks 5 and 6) or with your own image (alternatives: 27C040 or SST39SF040). Set solder jumper **J2** for the EPROM type.
@@ -164,6 +179,7 @@ rom/             DolphinDos26 ROMs for the 1571, the C64 and the C128 (C128 and 
                  SpeedDos26 kernals for the C64 and the C128,
                  EPROM template C1571_29F040.BIN (drive)
 ms-tools/        ms-tools.d64
+rom-builder/     MS-ROM-Builder: browser tool for your own EPROM images
 hardware/        Gerber, schematics, BOM, GAL and ATmega files (V3.3)
 assets/          Images for this page
 tools/           Maintenance scripts for this repository (make_eprom_1571.py, update_release.py)
@@ -248,7 +264,10 @@ Die DolphinDos26-ROMs sind dieselben wie im Release von [DolphinDOS26](https://g
 | `3@RNROM` | `$20000` | DolphinDOS 3 1571 (Original) |
 | `4@RNROM` | `$30000` | **C1571DolphinDos26** |
 | `5@RNROM`, `6@RNROM` | `$40000`, `$50000` | **C1571SpeedDOS26** (SpeedDos26 für die externe 1571) |
-| `7@RNROM`, `8@RNROM` | `$60000`, `$70000` | Commodore DOS V3.0 1571 (310654-05) |
+| `7@RNROM` | `$60000` | Commodore DOS V3.0 1571 (310654-05); Empfehlung: Platz für ein eigenes JiffyDOS-ROM |
+| `8@RNROM` | `$70000` | Commodore DOS V3.0 1571 (310654-05), frei für weitere DOS-Versionen |
+
+**JiffyDOS:** JiffyDOS gehört nicht zum Projekt und ist in keiner Vorlage enthalten. Wer ein eigenes, lizenziertes JiffyDOS-ROM für die 1571 besitzt, legt es am besten in **Bank 7** (`7@RNROM`): die 32-KB-Datei kommt in die obere Hälfte der Bank, ab Offset `$68000` des Abbilds. Bank 8 eignet sich ebenso. Am einfachsten geht das mit dem MS-ROM-Builder (siehe unten).
 
 ## SpeedDos26
 
@@ -310,6 +329,17 @@ Fuse-Bytes des ATmega328P: Low `0xFF`, High `0xDE`, Extended `0xFD`, Lock-Bits `
 
 **Platinen bestellen:** Die Platinen lassen sich aus den Gerber-Dateien bei jedem üblichen Leiterplattenhersteller fertigen.
 
+## MS-ROM-Builder (EPROM-Abbilder selbst bauen)
+
+[`rom-builder/MS-ROM-Builder.html`](rom-builder/MS-ROM-Builder.html) ist ein Browser-Tool, mit dem sich das 512-KB-EPROM-Abbild des 1571 Multi-Speeders in der externen 1571 selbst zusammenstellen lässt. Die Datei herunterladen und in einem aktuellen Browser öffnen – ohne Installation, offline unter Windows, macOS und Linux, und die ROM-Dateien verlassen den Rechner nicht. Das Tool enthält keine ROMs. Es ist ein Tool für alle drei Multi-Speeder-Platinen (1541, externe 1571, C128DCR); oben rechts **1571** wählen.
+
+- Alle acht Bänke mit den Steckplätzen der 1571: ganze Bank (64 KB), DOS-ROM `$8000`–`$FFFF` (32 KB) und Zusatz-ROM (4 KB). Die Vorlage `C1571_29F040.BIN` ist voreingestellt, mit DolphinDos26 in Bank 4 und SpeedDos26 in Bank 5 und 6.
+- ROM-Dateien hineinziehen: Sie werden über ihre Prüfsumme zugeordnet oder direkt auf einen Steckplatz gelegt. Fertige Abbilder lassen sich öffnen, in ihre Teile zerlegen und einzelne Bänke tauschen.
+- Prüfung auf fehlende, abweichende oder unbekannte ROMs, JiffyDOS-Inhalt und Reset-Vektoren; nennt den Kernal, der zu einer Bank gehört. Zeigt die Lötbrücke J2 für 29F040, SST39SF040 oder 27C040.
+- Die fertige 512-KB-Datei mit MD5 herunterladen; die Belegung als kleine Projektdatei speichern und laden (ohne ROM-Daten). Deutsch und Englisch.
+
+<p align="center"><img src="assets/ms-rom-builder.png" alt="MS-ROM-Builder" width="640"></p>
+
 ## Einbau in Kürze
 
 1. Den **29F040** der Multi-Speeder-Platine mit der Vorlage `C1571_29F040.BIN` (Commodore-DOS, DolphinDOS 3 in Bank 3, DolphinDos26 in Bank 4, SpeedDos26 in Bank 5 und 6) oder mit einem eigenen Abbild brennen (alternativ 27C040 oder SST39SF040). Die Lötbrücke **J2** passend zum EPROM-Typ setzen.
@@ -336,6 +366,7 @@ rom/             DolphinDos26-ROMs für die 1571, den C64 und den C128 (C128- un
                  SpeedDos26-Kernals für den C64 und den C128,
                  EPROM-Vorlage C1571_29F040.BIN (Laufwerk)
 ms-tools/        ms-tools.d64
+rom-builder/     MS-ROM-Builder: Browser-Tool für eigene EPROM-Abbilder
 hardware/        Gerber, Schaltpläne, Stückliste, GAL- und ATmega-Dateien (V3.3)
 assets/          Bilder für diese Seite
 tools/           Pflegeskripte für dieses Repository (make_eprom_1571.py, update_release.py)
