@@ -58,7 +58,7 @@ The board and the DOS banks are the same as on the [Multi-Speeder for the C128DC
 | [`C64IISpeedDos26.bin`](rom/C64IISpeedDos26.bin) | combined BASIC/kernal ROM of the C64 II, or ROM 251913 of the C128 (C64 mode) | C64 BASIC and kernal SpeedDos26 (16 KB) |
 | [`C128SpeedDos26-EN.bin`](rom/C128SpeedDos26-EN.bin) | kernal ROM 318020 of the C128 | C128 kernal SpeedDos26 (16 KB, C128 mode) with US keyboard |
 | [`C128SpeedDos26-DE.bin`](rom/C128SpeedDos26-DE.bin) | kernal ROM 318020 of the C128 | C128 kernal SpeedDos26 (16 KB, C128 mode) with German keyboard (DIN) |
-| [`ms-tools.d64`](ms-tools/ms-tools.d64) | disk | MS-Tools for testing (`MS-MEMTEST`) and copying, in C64 mode |
+| [`ms-tools.d64`](ms-tools/ms-tools.d64) | disk | MS-Tools for testing (`MS-DIAG`) and copying, in C64 mode |
 | [`hardware/gal`](hardware/gal) | GAL ATF16V8B (U7) | address decoder `ATF16V8_PAL_Adressendecoder_V3_0PIA_1571.jed` |
 | [`hardware/atmega328p`](hardware/atmega328p) | ATmega328P (U6) | ROM switcher firmware (`.hex`), source (`.ino`), XGecu project (`.mpj`) |
 
@@ -160,7 +160,7 @@ ATmega328P fuse bytes: low `0xFF`, high `0xDE`, extended `0xFD`, lock bits `0xCF
 5. Connect the parallel cable from CN1 to the user port of the computer (CN1 pin 1 CA2 → FLAG2, pins 2–9 PA0–PA7 → PB0–PB7, pin 10 CA1 ← PC2; manual chapter 2.4).
 6. In the computer, fit a DolphinDos26 kernal: `C64DolphinDos26.bin` (C64), `C64IIDolphinDos26.bin` (C64 II), on the C128 `C128DolphinDos26-US.BIN` or `C128DolphinDos26-DE.BIN` plus `C64IIDolphinDos26.bin` for C64 mode. For SpeedDos26 (banks 5 and 6) use the SpeedDos26 kernals instead, see [SpeedDos26](#speeddos26).
 7. Switch with `OPEN 1,8,15,"I:4@RNROM":CLOSE 1`. `@` reports `73,DOLPHINDOS26 1571,00,00`, loading shows `LOADING DD:`.
-8. Test the RAM in C64 mode with `MS-MEMTEST` from the MS-Tools disk.
+8. Test the RAM in C64 mode with `MS-DIAG` from the MS-Tools disk.
 
 <p align="center"><img src="assets/c128-start-screen.png" alt="C128 start-up screen with the kernal C128DolphinDos26" width="480"></p>
 
@@ -252,7 +252,7 @@ Platine und DOS-Bänke entsprechen dem [Multi-Speeder für den C128DCR](https://
 | [`C64IISpeedDos26.bin`](rom/C64IISpeedDos26.bin) | kombiniertes BASIC-/Kernal-ROM des C64 II oder ROM 251913 des C128 (C64-Modus) | C64-BASIC und -Kernal SpeedDos26 (16 KB) |
 | [`C128SpeedDos26-EN.bin`](rom/C128SpeedDos26-EN.bin) | Kernal-ROM 318020 des C128 | C128-Kernal SpeedDos26 (16 KB, C128-Modus) mit US-Tastatur |
 | [`C128SpeedDos26-DE.bin`](rom/C128SpeedDos26-DE.bin) | Kernal-ROM 318020 des C128 | C128-Kernal SpeedDos26 (16 KB, C128-Modus) mit deutscher Tastatur (DIN) |
-| [`ms-tools.d64`](ms-tools/ms-tools.d64) | Diskette | MS-Tools zum Testen (`MS-MEMTEST`) und Kopieren, im C64-Modus |
+| [`ms-tools.d64`](ms-tools/ms-tools.d64) | Diskette | MS-Tools zum Testen (`MS-DIAG`) und Kopieren, im C64-Modus |
 | [`hardware/gal`](hardware/gal) | GAL ATF16V8B (U7) | Adressdecoder `ATF16V8_PAL_Adressendecoder_V3_0PIA_1571.jed` |
 | [`hardware/atmega328p`](hardware/atmega328p) | ATmega328P (U6) | Firmware des ROM-Umschalters (`.hex`), Quelltext (`.ino`), XGecu-Projekt (`.mpj`) |
 
@@ -349,7 +349,7 @@ Fuse-Bytes des ATmega328P: Low `0xFF`, High `0xDE`, Extended `0xFD`, Lock-Bits `
 5. Das Parallelkabel von CN1 zum Userport des Rechners verbinden (CN1 Pin 1 CA2 → FLAG2, Pin 2–9 PA0–PA7 → PB0–PB7, Pin 10 CA1 ← PC2; Handbuch Kapitel 2.4).
 6. Im Rechner einen DolphinDos26-Kernal einsetzen: `C64DolphinDos26.bin` (C64), `C64IIDolphinDos26.bin` (C64 II), beim C128 `C128DolphinDos26-US.BIN` oder `C128DolphinDos26-DE.BIN` und für den C64-Modus `C64IIDolphinDos26.bin`. Für SpeedDos26 (Bank 5 und 6) stattdessen die SpeedDos26-Kernals einsetzen, siehe [SpeedDos26](#speeddos26-1).
 7. Mit `OPEN 1,8,15,"I:4@RNROM":CLOSE 1` umschalten. `@` meldet `73,DOLPHINDOS26 1571,00,00`, beim Laden erscheint `LOADING DD:`.
-8. Das RAM im C64-Modus mit `MS-MEMTEST` von der MS-Tools-Diskette prüfen.
+8. Das RAM im C64-Modus mit `MS-DIAG` von der MS-Tools-Diskette prüfen.
 
 ## Bekannte Grenzen
 

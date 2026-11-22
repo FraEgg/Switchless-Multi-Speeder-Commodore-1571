@@ -57,7 +57,7 @@ ROMS = ['C1571_DOLPHINDOS26.bin', 'C128DolphinDos26-US.BIN', 'C128DolphinDos26-D
 # Commodore DOS 310654-05 in banks 1, 2, 7 and 8, DolphinDOS 3 in bank 3, DolphinDos26 in bank 4,
 # SpeedDos26 for the external 1571 (Builds/C1571SpeedDOS26.bin) in banks 5 and 6
 TEMPLATES = ['C1571_29F040.BIN']
-# German manual -> English manual (dd25/doc/handbuch: make m7x, make en)
+# German manual -> English manual (dd26/doc/handbuch: make m7x, make en)
 MANUALS = {'MultiSpeeder1571_Handbuch.pdf': 'MultiSpeeder1571_Manual.pdf'}
 CHECKSUMMED = ('rom', 'ms-tools', 'manuals', 'hardware', 'rom-builder')
 # Browser tool MS-ROM-Builder (one tool for 1541, external 1571 and C128DCR) from its development
@@ -86,13 +86,13 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--root', default=str(ROOT), help='project folder with Builds and MS-Tools')
     ap.add_argument('--manuals', help='folder with the German PDF (default: Builds)')
-    ap.add_argument('--manuals-en', help='folder with the English PDF (default: dd25/doc/handbuch/build)')
+    ap.add_argument('--manuals-en', help='folder with the English PDF (default: dd26/doc/handbuch/build)')
     ap.add_argument('--check', action='store_true', help='report only, change nothing')
     a = ap.parse_args()
     root = pathlib.Path(a.root).resolve()
     builds = root / 'Builds'
     man_de = pathlib.Path(a.manuals) if a.manuals else builds
-    man_en = pathlib.Path(a.manuals_en) if a.manuals_en else root / 'dd25' / 'doc' / 'handbuch' / 'build'
+    man_en = pathlib.Path(a.manuals_en) if a.manuals_en else root / 'dd26' / 'doc' / 'handbuch' / 'build'
     bad = []
 
     for r in ROMS:
